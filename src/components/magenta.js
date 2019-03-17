@@ -7,7 +7,7 @@ class Magenta extends Component {
     super(props);
     this.state = {
       isPlayerLoaded: false,
-      isPlaying: false
+      isPlaying: false,
     };
 
     this.loadPlayer();
@@ -15,7 +15,7 @@ class Magenta extends Component {
 
   async loadPlayer() {
     this.player = await (() => {
-      new Promise(resolve => {
+      new Promise((resolve) => {
         resolve(new mm.SoundFontPlayer('https://storage.googleapis.com/magentadata/js/soundfonts/salamander'));
       })();
     });
@@ -24,7 +24,7 @@ class Magenta extends Component {
       run: (note) => {
         this.visualizer.redraw(note);
       },
-      stop: () => this.setState({ isPlaying: false })
+      stop: () => this.setState({ isPlaying: false }),
     };
 
     this.setState({ isPlayerLoaded: true });

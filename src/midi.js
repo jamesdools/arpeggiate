@@ -4,13 +4,13 @@ export function toNoteEvent(bytes) {
   return {
     note,
     velocity,
-    channel
+    channel,
   };
 }
 
 const Event = {
   NOTE_ON: 0x90,
-  NOTE_OFF: 0x80
+  NOTE_OFF: 0x80,
 };
 
 function toChannelAgnosticEvent(bytes) {
@@ -23,23 +23,23 @@ export function attachEventHandlers(inputDevice, {
   noteOff,
   ...handlers
 }) {
-  inputDevice.onmidimessage = event => {
+  inputDevice.onmidimessage = (event) => {
     switch (toChannelAgnosticEvent(event.data[0])) {
-      case Event.NOTE_ON:
-      {
-        const noteEvent = toNoteEvent(event.data);
-        if (noteEvent.velocity) {
-          noteOn(noteEvent);
-        } else {
-          noteOff(noteEvent);
-        }
-        break;
+    case Event.NOTE_ON:
+    {
+      const noteEvent = toNoteEvent(event.data);
+      if (noteEvent.velocity) {
+        noteOn(noteEvent);
+      } else {
+        noteOff(noteEvent);
       }
-      case Event.NOTE_OFF:
-        noteOff(toNoteEvent(event.data));
-        break;
-      default:
-        break;
+      break;
+    }
+    case Event.NOTE_OFF:
+      noteOff(toNoteEvent(event.data));
+      break;
+    default:
+      break;
     }
   };
   const removeHandlers = () => inputDevice.onmidimessage = () => {};
@@ -50,6 +50,6 @@ export async function enumerateDevices(globalNavigator = navigator) {
   const devices = await globalNavigator.requestMIDIAccess();
   return {
     inputs: [...devices.inputs.values()],
-    outputs: [...devices.outputs.values()]
+    outputs: [...devices.outputs.values()],
   };
 }

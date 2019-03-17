@@ -43,7 +43,7 @@ class Keyboard extends Component {
               keyboardShortcuts={keyboardShortcuts}
             />
             <ManagedInputDeviceSelect
-              placeholder={`Inputs`}
+              placeholder={'Inputs'}
               noteOn={event => playNote(event.note)}
               noteOff={event => stopNote(event.note)}
             />

@@ -5,7 +5,7 @@ import { attachEventHandlers, enumerateDevices } from '../midi';
 
 const DeviceSelect = ({
   devices = [],
-  placeholder = `Devices`,
+  placeholder = 'Devices',
   onDeviceSelected = () => {},
   ...props
 }) => (
@@ -23,7 +23,7 @@ const DeviceSelect = ({
   >
     <option value="">{placeholder}</option>
     {devices.map(
-      (device, index) => <option key={index} value={index}>{device.name}</option>
+      (device, index) => <option key={index} value={index}>{device.name}</option>,
     )}
   </select>
 );
@@ -33,7 +33,7 @@ export class ManagedInputDeviceSelect extends Component {
     super();
     this.state = {
       inputs: [],
-      resetCurrentInput: () => {}
+      resetCurrentInput: () => {},
     };
   }
 
@@ -42,20 +42,20 @@ export class ManagedInputDeviceSelect extends Component {
       const { inputs } = await enumerateDevices();
       this.setState({
         ...this.state,
-        inputs
+        inputs,
       });
     })();
   }
 
   render() {
-    const {noteOn, noteOff, ...props} = {
+    const { noteOn, noteOff, ...props } = {
       noteOn: () => {},
       noteOff: () => {},
-      ...this.props
+      ...this.props,
     };
     return <DeviceSelect
       devices={this.state.inputs}
-      onDeviceSelected={device => {
+      onDeviceSelected={(device) => {
         this.state.resetCurrentInput();
         this.setState({
           ...this.state,
@@ -63,15 +63,14 @@ export class ManagedInputDeviceSelect extends Component {
             device,
             {
               noteOn,
-              noteOff
-            }
-          )
-        })
+              noteOff,
+            },
+          ),
+        });
       }}
       {...props}
     />;
   }
-
 }
 
 export default DeviceSelect;
