@@ -6,6 +6,10 @@ import SoundfontProvider from './SoundfontProvider';
 import 'react-piano/dist/styles.css';
 
 class Keyboard extends Component {
+  onPlayNoteInput = (midiNumber) => {
+    console.log(midiNumber);
+  }
+
   render() {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
@@ -34,6 +38,8 @@ class Keyboard extends Component {
             stopNote={stopNote}
             disabled={isLoading}
             keyboardShortcuts={keyboardShortcuts}
+            keyWidthToHeight={0.22}
+            onPlayNoteInput={this.onPlayNoteInput}
           />
         )}
       />
