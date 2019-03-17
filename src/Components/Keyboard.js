@@ -5,10 +5,14 @@ import SoundfontProvider from './SoundfontProvider';
 
 import 'react-piano/dist/styles.css';
 
+import { ManagedInputDeviceSelect } from './DeviceSelect';
+
 class Keyboard extends Component {
   onPlayNoteInput = (midiNumber) => {
     console.log(midiNumber);
   }
+
+  
 
   render() {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -31,16 +35,21 @@ class Keyboard extends Component {
         audioContext={audioContext}
         hostname={soundfontHostname}
         render={({ isLoading, playNote, stopNote }) => (
-          <Piano
-            width={640}
-            noteRange={noteRange}
-            playNote={playNote}
-            stopNote={stopNote}
-            disabled={isLoading}
-            keyboardShortcuts={keyboardShortcuts}
-            keyWidthToHeight={0.22}
-            onPlayNoteInput={this.onPlayNoteInput}
-          />
+          <>
+            <Piano
+              width={640}
+              noteRange={noteRange}
+              playNote={playNote}
+              stopNote={stopNote}
+              disabled={isLoading}
+              keyboardShortcuts={keyboardShortcuts}
+            />
+            <ManagedInputDeviceSelect
+              placeholder={`Inputs`}
+              noteOn={event => playNote(event.note)}
+              noteOff={event => stopNote(event.note)}
+            />
+          </>
         )}
       />
     );
