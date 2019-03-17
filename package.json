@@ -6,7 +6,7 @@
     "@magenta/music": "^1.6.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-piano": "^0.1.4",
+    "react-piano": "^3.1.2",
     "react-piano-component": "^0.1.4",
     "react-scripts": "2.1.8"
   },
