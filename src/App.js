@@ -34,6 +34,10 @@ class App extends Component {
         <DeviceSelect
           placeholder={`Inputs`}
           devices={this.state.midi.inputs}
+          onDeviceSelected={{
+            noteOn: (event) => console.log('note on', event),
+            noteOff: (event) => console.log('note off', event)
+          }}
         />
         <DeviceSelect
           placeholder={`Outputs`}
