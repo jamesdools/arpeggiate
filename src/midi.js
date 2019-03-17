@@ -45,3 +45,11 @@ export function attachEventHandlers(inputDevice, {
   const removeHandlers = () => inputDevice.onmidimessage = () => {};
   return removeHandlers;
 }
+
+export async function enumerateDevices(globalNavigator = navigator) {
+  const devices = await globalNavigator.requestMIDIAccess();
+  return {
+    inputs: [...devices.inputs.values()],
+    outputs: [...devices.outputs.values()]
+  };
+}
