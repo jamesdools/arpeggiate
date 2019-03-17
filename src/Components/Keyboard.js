@@ -12,8 +12,6 @@ class Keyboard extends Component {
     console.log(midiNumber);
   }
 
-  
-
   render() {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
