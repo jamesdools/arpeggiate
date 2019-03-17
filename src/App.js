@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Keyboard from './Components/Keyboard';
 import DeviceSelect from './Components/DeviceSelect';
 
+import { attachEventHandlers } from './midi';
+
 class App extends Component {
   constructor() {
     super();
@@ -10,7 +12,8 @@ class App extends Component {
       midi: {
         inputs: [],
         outputs: []
-      }
+      },
+      resetCurrentMidiInput: () => {}
     };
   }
 
@@ -34,9 +37,18 @@ class App extends Component {
         <DeviceSelect
           placeholder={`Inputs`}
           devices={this.state.midi.inputs}
-          onDeviceSelected={{
-            noteOn: (event) => console.log('note on', event),
-            noteOff: (event) => console.log('note off', event)
+          onDeviceSelected={device => {
+            this.state.resetCurrentMidiInput();
+            this.setState({
+              ...this.state,
+              resetCurrentMidiInput: attachEventHandlers(
+                device,
+                {
+                  noteOn: (event) => console.log('note on', event),
+                  noteOff: (event) => console.log('note off', event)
+                }
+              )
+            })
           }}
         />
         <DeviceSelect
