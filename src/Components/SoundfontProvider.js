@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Soundfont from 'soundfont-player';
+import { AudioContext } from '../polyfills';
 
 class SoundfontProvider extends React.Component {
   static propTypes = {
@@ -10,7 +11,7 @@ class SoundfontProvider extends React.Component {
     hostname: PropTypes.string.isRequired,
     format: PropTypes.oneOf(['mp3', 'ogg']),
     soundfont: PropTypes.oneOf(['MusyngKite', 'FluidR3_GM']),
-    audioContext: PropTypes.instanceOf(window.AudioContext),
+    audioContext: PropTypes.instanceOf(AudioContext),
     render: PropTypes.func,
   };
 

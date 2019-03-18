@@ -6,6 +6,7 @@ import SoundfontProvider from './SoundfontProvider';
 import 'react-piano/dist/styles.css';
 
 import { ManagedInputDeviceSelect } from './DeviceSelect';
+import { AudioContext } from '../polyfills';
 
 class Keyboard extends Component {
   onPlayNoteInput = (midiNumber) => {
@@ -13,7 +14,7 @@ class Keyboard extends Component {
   }
 
   render() {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioContext = new AudioContext();
     const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
 
     const noteRange = {
