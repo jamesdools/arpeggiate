@@ -38,7 +38,7 @@ class SoundfontProvider extends React.Component {
     }
   }
 
-  loadInstrument = instrumentName => {
+  loadInstrument = (instrumentName) => {
     // Re-trigger loading state
     this.setState({
       instrument: null,
@@ -46,17 +46,15 @@ class SoundfontProvider extends React.Component {
     Soundfont.instrument(this.props.audioContext, instrumentName, {
       format: this.props.format,
       soundfont: this.props.soundfont,
-      nameToUrl: (name, soundfont, format) => {
-        return `${this.props.hostname}/${soundfont}/${name}-${format}.js`;
-      },
-    }).then(instrument => {
+      nameToUrl: (name, soundfont, format) => `${this.props.hostname}/${soundfont}/${name}-${format}.js`,
+    }).then((instrument) => {
       this.setState({
         instrument,
       });
     });
   };
 
-  playNote = midiNumber => {
+  playNote = (midiNumber) => {
     this.props.audioContext.resume().then(() => {
       const audioNode = this.state.instrument.play(midiNumber);
       this.setState({
@@ -67,7 +65,7 @@ class SoundfontProvider extends React.Component {
     });
   };
 
-  stopNote = midiNumber => {
+  stopNote = (midiNumber) => {
     this.props.audioContext.resume().then(() => {
       if (!this.state.activeAudioNodes[midiNumber]) {
         return;
@@ -86,7 +84,7 @@ class SoundfontProvider extends React.Component {
   stopAllNotes = () => {
     this.props.audioContext.resume().then(() => {
       const activeAudioNodes = Object.values(this.state.activeAudioNodes);
-      activeAudioNodes.forEach(node => {
+      activeAudioNodes.forEach((node) => {
         if (node) {
           node.stop();
         }

@@ -10,8 +10,8 @@ class DeviceSelect extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const shouldForceSelection = this.props.forceSelectionToIndex &&
-      this.props.forceSelectionToIndex !== prevProps.forceSelectionToIndex;
+    const shouldForceSelection = this.props.forceSelectionToIndex
+      && this.props.forceSelectionToIndex !== prevProps.forceSelectionToIndex;
     if (shouldForceSelection) {
       this.selectRef.current.selectedIndex = this.props.forceSelectionToIndex;
     }
@@ -20,7 +20,7 @@ class DeviceSelect extends Component {
   render() {
     const {
       devices = [],
-      placeholder = `Devices`,
+      placeholder = 'Devices',
       onDeviceSelected = () => {},
       forceSelectionToIndex,
       ...props
@@ -33,7 +33,7 @@ class DeviceSelect extends Component {
           (e) => {
             const index = e.target.selectedIndex - 1;
             if (index < 0 || index >= devices.length) return;
-  
+
             onDeviceSelected(devices[index]);
           }
         }
@@ -42,7 +42,7 @@ class DeviceSelect extends Component {
       >
         <option value="">{placeholder}</option>
         {devices.map(
-          (device, index) => <option key={index} value={index}>{device.name}</option>
+          (device, index) => <option key={index} value={index}>{device.name}</option>,
         )}
       </select>
     );
@@ -52,7 +52,7 @@ class DeviceSelect extends Component {
 function currentEmptyInputDevice() {
   return {
     resetHandlers: () => {},
-    device: () => null
+    device: () => null,
   };
 }
 
@@ -62,7 +62,7 @@ export class ManagedInputDeviceSelect extends Component {
     this.state = {
       inputs: [],
       currentInput: currentEmptyInputDevice(),
-      forceSelectionToIndex: null
+      forceSelectionToIndex: null,
     };
   }
 
@@ -72,32 +72,32 @@ export class ManagedInputDeviceSelect extends Component {
         onStateChanged: (e) => {
           const inputs = [...e.target.inputs.values()];
           const currentInput = this.state.currentInput;
-          const indexOfCurrentInput = inputs.findIndex((device) => device === currentInput.device);
+          const indexOfCurrentInput = inputs.findIndex(device => device === currentInput.device);
           const isCurrentInputValid = indexOfCurrentInput !== -1;
           this.setState({
             ...this.state,
             inputs,
             currentInput: isCurrentInputValid ? currentInput : currentEmptyInputDevice(),
-            forceSelectionToIndex: isCurrentInputValid ? indexOfCurrentInput + 1 : 0
+            forceSelectionToIndex: isCurrentInputValid ? indexOfCurrentInput + 1 : 0,
           });
-        }
+        },
       });
       this.setState({
         ...this.state,
-        inputs
+        inputs,
       });
     })();
   }
 
   render() {
-    const {noteOn, noteOff, ...props} = {
+    const { noteOn, noteOff, ...props } = {
       noteOn: () => {},
       noteOff: () => {},
-      ...this.props
+      ...this.props,
     };
     return <DeviceSelect
       devices={this.state.inputs}
-      onDeviceSelected={device => {
+      onDeviceSelected={(device) => {
         this.state.currentInput.resetHandlers();
         this.setState({
           ...this.state,
@@ -106,18 +106,17 @@ export class ManagedInputDeviceSelect extends Component {
               device,
               {
                 noteOn,
-                noteOff
-              }
+                noteOff,
+              },
             ),
-            device
-          }
-        })
+            device,
+          },
+        });
       }}
       forceSelectionToIndex={this.state.forceSelectionToIndex}
       {...props}
     />;
   }
-
 }
 
 export default DeviceSelect;

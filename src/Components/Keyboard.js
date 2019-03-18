@@ -8,6 +8,10 @@ import 'react-piano/dist/styles.css';
 import { ManagedInputDeviceSelect } from './DeviceSelect';
 
 class Keyboard extends Component {
+  onPlayNoteInput = (midiNumber) => {
+    console.log(midiNumber);
+  }
+
   render() {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
@@ -39,7 +43,7 @@ class Keyboard extends Component {
               keyboardShortcuts={keyboardShortcuts}
             />
             <ManagedInputDeviceSelect
-              placeholder={`Inputs`}
+              placeholder={'Inputs'}
               noteOn={event => playNote(event.note)}
               noteOff={event => stopNote(event.note)}
             />
