@@ -42,14 +42,27 @@ export function attachEventHandlers(inputDevice, {
         break;
     }
   };
-  const removeHandlers = () => inputDevice.onmidimessage = () => {};
+  const removeHandlers = () => inputDevice.onmidimessage = null;
   return removeHandlers;
 }
 
-export async function enumerateDevices(globalNavigator = navigator) {
-  const devices = await globalNavigator.requestMIDIAccess();
+export async function enumerateDevices({
+  onStateChanged = () => {},
+  globalNavigator = navigator
+}) {
+  const access = await globalNavigator.requestMIDIAccess();
+  const wrapCurrentOnStateChanged = (access) => {
+    const wrappedOnStateChanged = access.onstatechange;
+    access.onstatechange = (e) => {
+      if (wrappedOnStateChanged) {
+        wrappedOnStateChanged(e);
+      }
+      onStateChanged(e);
+    }
+  }
+  wrapCurrentOnStateChanged(access);
   return {
-    inputs: [...devices.inputs.values()],
-    outputs: [...devices.outputs.values()]
+    inputs: [...access.inputs.values()],
+    outputs: [...access.outputs.values()]
   };
 }
