@@ -50,6 +50,11 @@ export async function enumerateDevices({
   onStateChanged = () => {},
   globalNavigator = navigator,
 }) {
+  const isWebMidiSupported = globalNavigator &&
+    typeof globalNavigator.requestMIDIAccess === 'function';
+  if (!isWebMidiSupported) {
+    return { isWebMidiSupported, inputs: [], outputs: [] };
+  }
   const access = await globalNavigator.requestMIDIAccess();
   const wrapCurrentOnStateChanged = (access) => {
     const wrappedOnStateChanged = access.onstatechange;
@@ -64,5 +69,6 @@ export async function enumerateDevices({
   return {
     inputs: [...access.inputs.values()],
     outputs: [...access.outputs.values()],
+    isWebMidiSupported,
   };
 }
