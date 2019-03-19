@@ -56,6 +56,12 @@ function currentEmptyInputDevice() {
   };
 }
 
+const WebMidiNotSupported = (props) => <p {...props}>Web MIDI API not supported</p>;
+
+const FallbackDeviceSelect = ({isWebMidiSupported, ...props}) => (
+  isWebMidiSupported ? <DeviceSelect {...props} /> : <WebMidiNotSupported />
+);
+
 export class ManagedInputDeviceSelect extends Component {
   constructor(props) {
     super(props);
@@ -63,12 +69,13 @@ export class ManagedInputDeviceSelect extends Component {
       inputs: [],
       currentInput: currentEmptyInputDevice(),
       forceSelectionToIndex: null,
+      isWebMidiSupported: false
     };
   }
 
   componentDidMount() {
     (async () => {
-      const { inputs } = await enumerateDevices({
+      const { inputs, isWebMidiSupported } = await enumerateDevices({
         onStateChanged: (e) => {
           const inputs = [...e.target.inputs.values()];
           const currentInput = this.state.currentInput;
@@ -85,6 +92,7 @@ export class ManagedInputDeviceSelect extends Component {
       this.setState({
         ...this.state,
         inputs,
+        isWebMidiSupported
       });
     })();
   }
@@ -95,7 +103,8 @@ export class ManagedInputDeviceSelect extends Component {
       noteOff: () => {},
       ...this.props,
     };
-    return <DeviceSelect
+    return <FallbackDeviceSelect
+      isWebMidiSupported={this.state.isWebMidiSupported}
       devices={this.state.inputs}
       onDeviceSelected={(device) => {
         this.state.currentInput.resetHandlers();
