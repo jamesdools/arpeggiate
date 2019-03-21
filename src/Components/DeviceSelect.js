@@ -49,7 +49,7 @@ class DeviceSelect extends Component {
   }
 }
 
-function currentEmptyInputDevice() {
+function createEmptyInputDevice() {
   return {
     resetHandlers: () => {},
     device: () => null,
@@ -67,7 +67,7 @@ export class ManagedInputDeviceSelect extends Component {
     super(props);
     this.state = {
       inputs: [],
-      currentInput: currentEmptyInputDevice(),
+      currentInput: createEmptyInputDevice(),
       forceSelectionToIndex: null,
       isWebMidiSupported: false,
     };
@@ -84,7 +84,7 @@ export class ManagedInputDeviceSelect extends Component {
           this.setState({
             ...this.state,
             inputs,
-            currentInput: isCurrentInputValid ? currentInput : currentEmptyInputDevice(),
+            currentInput: isCurrentInputValid ? currentInput : createEmptyInputDevice(),
             forceSelectionToIndex: isCurrentInputValid ? indexOfCurrentInput + 1 : 0,
           });
         },
