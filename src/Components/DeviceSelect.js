@@ -58,8 +58,8 @@ function createEmptyInputDevice() {
 
 const WebMidiNotSupported = props => <p {...props}>Web MIDI API not supported</p>;
 
-const FallbackDeviceSelect = ({ isWebMidiSupported, ...props }) => (
-  isWebMidiSupported ? <DeviceSelect {...props} /> : <WebMidiNotSupported />
+const FallbackDeviceSelect = ({ isWebMidiSupported, Fallback = WebMidiNotSupported, ...props }) => (
+  isWebMidiSupported ? <DeviceSelect {...props} /> : <Fallback />
 );
 
 export class ManagedInputDeviceSelect extends Component {
