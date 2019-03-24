@@ -16,3 +16,7 @@ code {
 .App {
   text-align: center;
 }
+
+html, body, #root {
+  height: 100%;
+}

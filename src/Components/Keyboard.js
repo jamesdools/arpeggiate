@@ -3,7 +3,8 @@ import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 
 import SoundfontProvider from './SoundfontProvider';
 
-import 'react-piano/dist/styles.css';
+// import 'react-piano/dist/styles.css';
+import './Keyboard.css';
 
 import { ManagedInputDeviceSelect } from './DeviceSelect';
 import { AudioContext } from '../polyfills';
@@ -36,12 +37,14 @@ class Keyboard extends Component {
         render={({ isLoading, playNote, stopNote }) => (
           <>
             <Piano
+              className={'keyboard'}
               width={640}
               noteRange={noteRange}
               playNote={playNote}
               stopNote={stopNote}
               disabled={isLoading}
               keyboardShortcuts={keyboardShortcuts}
+              keyWidthToHeight={0.26}
             />
             <ManagedInputDeviceSelect
               placeholder={'Inputs'}

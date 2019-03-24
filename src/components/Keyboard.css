@@ -1,85 +1,101 @@
-/* https://github.com/lillydinhle/react-piano-component/blob/master/src/demo/components/InteractivePiano.css */
-
-.keyboard {
-  display: block;
-  margin-bottom: 1em;
-}
-
-.interactive-piano__piano-container {
-  display: inline-flex;
-  box-sizing: border-box;
-  border-top: 10px solid #ed5276;
+.ReactPiano__Keyboard {
   position: relative;
-  margin: auto;
+  display: flex;
+  margin: 0 auto;
 }
 
-.interactive-piano__piano-container::after {
-  content: '';
-  width: 100%;
-  height: 5px;
-  background-color: rgba(68, 68, 68, 0.1);
+.ReactPiano__Key {
+  display: flex;
+}
+
+.ReactPiano__Key--accidental {
+  background: #444;
+  /* border: 1px solid #fff; */
+  border-top: 1px solid transparent;
+  border-radius: 0 0 4px 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 66%;
+  z-index: 1;
   position: absolute;
   top: 0;
 }
 
-.interactive-piano__accidental-key__wrapper {
-  position: relative;
-  width: 0;
-}
-
-.interactive-piano__accidental-key {
-  position: absolute;
-  transform: translateX(-50%);
-  cursor: pointer;
-  background: #444;
-  width: 36px;
-  height: 120px;
-  border-radius: 0px 0px 3px 3px;
-  border: 3px solid #444;
-  border-top: none;
-  box-sizing: border-box;
-  padding: 5px;
-  outline: none;
-  color: #dbdbdb;
-}
-
-.interactive-piano__accidental-key--playing {
-  background: #ed5276;
-  color: #fff;
-}
-
-.interactive-piano__natural-key {
-  cursor: pointer;
+.ReactPiano__Key--natural {
   background: #fafafa;
-  width: 50px;
-  height: 180px;
-  margin: 0 2px;
-  border-radius: 0 0 3px 3px;
-  border: none;
-  padding: 10px;
-  outline: none;
-  box-sizing: border-box;
-  color: #444;
+  border: 1px solid #888;
+  border-radius: 0 0 6px 6px;
+  cursor: pointer;
+  z-index: 0;
+  flex: 1;
+  margin-right: 2px;
 }
 
-.interactive-piano__natural-key--playing {
-  border-bottom: 10px solid #ed5276;
-  color: #ed5276;
-}
-
-.interactive-piano__natural-key:first-of-type {
-  margin-left: 0;
-}
-
-.interactive-piano__natural-key:last-of-type {
+.ReactPiano__Key--natural:last-child {
+  /* Don't render extra margin on the last natural note */
   margin-right: 0;
 }
 
-.interactive-piano__text {
-  pointer-events: none;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  font-size: 1rem;
+.ReactPiano__Key--active {
+  /* background: #3ac8da; */
+}
+
+.ReactPiano__Key--active.ReactPiano__Key--accidental {
+  background: #FFBF46;
+  border: 1px solid #444;
+}
+
+.ReactPiano__Key--active.ReactPiano__Key--natural {
+  border-bottom: 10px solid #FFBF46;
+}
+
+.ReactPiano__Key--disabled.ReactPiano__Key {
+  cursor: progress;
+}
+
+.ReactPiano__Key--disabled.ReactPiano__Key--accidental {
+  background: #ddd;
+  border: 1px solid #999;
+}
+
+.ReactPiano__Key--disabled.ReactPiano__Key--natural {
+  background: #eee;
+  border: 1px solid #aaa;
+}
+
+.ReactPiano__NoteLabelContainer {
+  flex: 1;
+  align-self: flex-end;
+}
+
+.ReactPiano__NoteLabel {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: capitalize;
+  /* Disable text selection */
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.ReactPiano__NoteLabel--accidental {
+  color: #f8e8d5;
+  margin-bottom: 4px;
+}
+
+.ReactPiano__NoteLabel--accidental.ReactPiano__NoteLabel--active {
+  color: #f8e8d5;
+  border-bottom: 10px solid #444;
+  margin-bottom: 0;
+}
+
+.ReactPiano__NoteLabel--natural {
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.ReactPiano__NoteLabel--natural.ReactPiano__NoteLabel--active {
+  color: #FFBF46;
 }
