@@ -9,7 +9,31 @@ import './Keyboard.css';
 import { ManagedInputDeviceSelect } from './DeviceSelect';
 import { AudioContext } from '../polyfills';
 
+class MidiNoteSet {
+  constructor() {
+    this.notes = new Set();
+  }
+
+  insert(note) {
+    this.notes.add(note);
+    return [...this.notes];
+  }
+
+  erase(note) {
+    this.notes.delete(note);
+    return this.notes.size ? [...this.notes] : null;
+  }
+}
+
 class Keyboard extends Component {
+  constructor(props) {
+    super(props);
+    this.heldMidiNotes = new MidiNoteSet();
+    this.state = {
+      heldMidiNotes: null
+    };
+  }
+
   onPlayNoteInput = (midiNumber) => {
     console.log(midiNumber);
   }
@@ -45,11 +69,22 @@ class Keyboard extends Component {
               disabled={isLoading}
               keyboardShortcuts={keyboardShortcuts}
               keyWidthToHeight={0.26}
+              activeNotes={this.state.heldMidiNotes}
             />
             <ManagedInputDeviceSelect
               placeholder={'Inputs'}
-              noteOn={event => playNote(event.note)}
-              noteOff={event => stopNote(event.note)}
+              noteOn={event => {
+                this.setState({
+                  ...this.state,
+                  heldMidiNotes: this.heldMidiNotes.insert(event.note)
+                });
+              }}
+              noteOff={event => {
+                this.setState({
+                  ...this.state,
+                  heldMidiNotes: this.heldMidiNotes.erase(event.note)
+                });
+              }}
             />
           </>
         )}
